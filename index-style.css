@@ -35,6 +35,17 @@ h1 {
     margin-right: 20px;
 }
 
+h2 {
+    font-size: 35px;
+    text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.5);
+    letter-spacing: 2px;
+    margin: 0;
+    font-family: 'Luckiest Guy', cursive;
+    color: #31572c;
+    text-align:  center;
+    margin-right: 20px;
+}
+
 .carousel-container {
     margin: 40px 0;
 }
@@ -235,6 +246,10 @@ h1 {
     }
 
     h1 {
+        font-size: 20px;
+    }
+
+    h2 {
         font-size: 20px;
     }
 
