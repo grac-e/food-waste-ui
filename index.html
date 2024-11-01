@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Landing Page</title>
+    <link rel="stylesheet" href="index-style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.10.2/cdn.min.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
 </head>
@@ -13,30 +13,140 @@
 <body>
     <div class="baner">
         <h1>FOOD WASTE APP</h1>
-    </div>
 
-    <!-- <div class="logo-container">
-        <img src="./images/logo.png" alt="logo" class="logo">
-    </div> -->
-
-    <div class="login-container">
-        <input type="email" placeholder="Enter email" class="input-field" required>
-        <input type="password" placeholder="Enter password" class="input-field" required>
-        <div class="buttons">
-            <div class="section" onclick="location.href='homepage.html';">Login</div>
-        </div>
-        <div class="footer-links">
-            <a href="#">Forgot Password?</a>
-            <span> | </span>
-            <a href="register.html">Register</a>
+        <div class="nav-links">
+            <a href="login.html">Login</a>
         </div>
     </div>
+
+    <div class="carousel-container" x-data="carousel()">
+        <!-- Food Waste Statistics Carousel -->
+        <div class="carousel-section">
+            <h2 class="carousel-title">Food Waste Statistics</h2>
+            <div class="carousel">
+                <div class="carousel-items" :class="{ 'carousel-transition': autoSlide }">
+                    <template x-for="(image, index) in foodWasteImages" :key="index">
+                        <div class="carousel-item" :class="{ 'active': currentIndex === index }">
+                            <div class="image-container">
+                                <img :src="image.src" :alt="image.alt">
+                            </div>
+                        </div>
+                    </template>
+                    <!-- <template x-for="(image, index) in foodWasteImages" :key="index">
+                        <div class="carousel-item" :class="{ 'active': currentIndex === index }">
+                            <img :src="image.src" :alt="image.alt">
+                        </div>
+                    </template> -->
+                </div>
+                <button class="carousel-button prev" @click="prevSlide()"><img src="./images/back (1).png" alt="" width="15px"></button>
+                <button class="carousel-button next" @click="nextSlide()"><img src="./images/next.png" alt="" width="20px"></button>
+            </div>
+        </div>
+
+        <!-- Environmental Impact Carousel -->
+        <div class="carousel-section">
+            <h2 class="carousel-title">Environmental Impact</h2>
+            <div class="carousel">
+                <div class="carousel-items" :class="{ 'carousel-transition': autoSlide }">
+                    <template x-for="(image, index) in environmentalImpactImages" :key="index">
+                        <div class="carousel-item" :class="{ 'active': currentIndex === index }">
+                            <div class="image-container">
+                                <img :src="image.src" :alt="image.alt">
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <button class="carousel-button prev" @click="prevSlide()"><img src="./images/back (1).png" alt="" width="15px"></button>
+                <button class="carousel-button next" @click="nextSlide()"><img src="./images/next.png" alt="" width="20px"></button>
+            </div>
+        </div>
+
+        <!-- Solutions Carousel -->
+        <div class="carousel-section">
+            <h2 class="carousel-title">Solutions & Tips</h2>
+            <div class="carousel">
+                <div class="carousel-items" :class="{ 'carousel-transition': autoSlide }">
+                    <template x-for="(image, index) in solutionsImages" :key="index">
+                        <div class="carousel-item" :class="{ 'active': currentIndex === index }">
+                            <div class="image-container">
+                                <img :src="image.src" :alt="image.alt">
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <button class="carousel-button prev" @click="prevSlide()"><img src="./images/back (1).png" alt="" width="15px"></button>
+                <button class="carousel-button next" @click="nextSlide()"><img src="./images/next.png" alt="" width="20px"></button>
+            </div>
+        </div>
+    </div>
+
 
     <footer class="footer">
         <div class="footer-content">
             <p>&copy; 2024 Food Waste Awareness. All Rights Reserved.</p>
         </div>
     </footer>
+
+    <script>
+        function carousel() {
+            return {
+                foodWasteImages: [
+                    { src: './images/image1.png', alt: 'Statistics 1' },
+                    { src: './images/image2.jpg', alt: 'Statistics 2' },
+                    { src: './images/image3.jpg', alt: 'Statistics 3' },
+                    { src: './images/image4.jpg', alt: 'Statistics 4' },
+                ],
+                environmentalImpactImages: [
+                    { src: './images/image5.jpg', alt: 'Impact 1' },
+                    { src: './images/image6.png', alt: 'Impact 2' },
+                    { src: './images/image7.jpg', alt: 'Impact 3' },
+                    { src: './images/image8.png', alt: 'Impact 4' },
+                ],
+                solutionsImages: [
+                    { src: './images/image9.jpg', alt: 'Solution 1' },
+                    { src: './images/image10.png', alt: 'Solution 2' },
+                    { src: './images/image11.png', alt: 'Solution 3' },
+                    { src: './images/image12.png', alt: 'Solution 4' },
+                ],
+                currentIndex: 0,
+                autoSlide: false,
+                autoSlideInterval: null,
+
+                prevSlide() {
+                    this.currentIndex = (this.currentIndex - 1 + this.getCurrentImages().length) % this.getCurrentImages().length;
+                    this.startAutoSlide();
+                },
+
+                nextSlide() {
+                    this.currentIndex = (this.currentIndex + 1) % this.getCurrentImages().length;
+                    this.startAutoSlide();
+                },
+
+                getCurrentImages() {
+                    if (this.$el.contains(this.$el.querySelector('.carousel-section:nth-child(1)'))) {
+                        return this.foodWasteImages;
+                    } else if (this.$el.contains(this.$el.querySelector('.carousel-section:nth-child(2)'))) {
+                        return this.environmentalImpactImages;
+                    } else {
+                        return this.solutionsImages;
+                    }
+                },
+
+                startAutoSlide() {
+                    this.autoSlide = true;
+                    clearInterval(this.autoSlideInterval);
+                    this.autoSlideInterval = setInterval(() => {
+                        this.nextSlide();
+                    }, 5000);
+                },
+
+                stopAutoSlide() {
+                    this.autoSlide = false;
+                    clearInterval(this.autoSlideInterval);
+                },
+            };
+        }
+    </script>
 </body>
 
 </html>
